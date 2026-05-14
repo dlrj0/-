@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ✏️ 브라우저 탭에 표시될 이름 -->
-<title>서윤이 생일</title>
+<!-- ✏️ 브라우저 탭 이름 -->
+<title>서윤이 생일🥀</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -13,66 +13,216 @@
 
 body {
   min-height: 100vh;
-  background: #f5ece0;
+  background: #fdf4ec;
   font-family: 'Nanum Myeongjo', serif;
   color: #3a2e26;
+  overflow: hidden;
+}
+
+/* ── 봉투 화면 ── */
+#envelope-scene {
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 16px 80px;
+  justify-content: center;
+  gap: 32px;
+  background: #fdf4ec;
+  z-index: 100;
+  transition: opacity 0.7s ease;
 }
+#envelope-scene.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.envelope {
+  width: 300px;
+  height: 200px;
+  position: relative;
+  cursor: pointer;
+  perspective: 800px;
+  filter: drop-shadow(0 8px 28px #b0784088);
+}
+
+/* 봉투 몸통 */
+.env-body {
+  position: absolute;
+  inset: 0;
+  background: #f0d9bc;
+  border-radius: 6px;
+  border: 1.5px solid #d9b98a;
+  overflow: hidden;
+}
+/* 아래 V 접힘 */
+.env-body::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 52%;
+  background: #e4c49e;
+  clip-path: polygon(0 100%, 50% 0%, 100% 100%);
+}
+/* 왼쪽/오른쪽 접힘 그림자 */
+.env-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, #d4a87440 0%, transparent 45%),
+    linear-gradient(to left,  #d4a87440 0%, transparent 45%);
+}
+
+/* 봉투 안 편지 종이 */
+.env-letter {
+  position: absolute;
+  left: 18px; right: 18px;
+  bottom: 0;
+  height: 75%;
+  background: #fffcf7;
+  border: 1px solid #e2cdb2;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transform: translateY(0);
+  transition: transform 0.85s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+/* 플랩 래퍼 (3D 회전 대상) */
+.env-flap-wrap {
+  position: absolute;
+  top: -1px; left: -1px; right: -1px;
+  height: 53%;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+/* 플랩 앞면 (삼각형) */
+.env-flap-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #e8c9a4;
+  clip-path: polygon(0 0, 100% 0, 50% 95%);
+  border-top: 1.5px solid #d9b98a;
+  border-left: 1.5px solid #d9b98a;
+  border-right: 1.5px solid #d9b98a;
+  border-radius: 6px 6px 0 0;
+}
+/* 플랩 뒷면 */
+.env-flap-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #f5e4cc;
+  clip-path: polygon(0 0, 100% 0, 50% 95%);
+  transform: rotateX(180deg) translateZ(0.5px);
+}
+
+/* 봉인 원형 */
+.env-seal {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  background: #bf5e38;
+  border-radius: 50%;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  box-shadow: 0 2px 6px #00000028;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* 열렸을 때 */
+.envelope.open .env-flap-wrap {
+  transform: rotateX(-190deg);
+}
+.envelope.open .env-seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+}
+.envelope.open .env-letter {
+  transform: translateY(-42%);
+}
+
+.hint {
+  font-size: 15px;
+  color: #b08060;
+  letter-spacing: 0.5px;
+  animation: blink 2.2s ease-in-out infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ── 편지 화면 ── */
+#letter-scene {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 16px 80px;
+}
+#letter-scene.show {
+  display: flex;
+  animation: rise 0.65s cubic-bezier(0.34, 1.1, 0.64, 1) both;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(36px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+body.scrollable { overflow: auto; }
 
 .paper {
   width: 100%;
-  max-width: 640px;
+  max-width: 620px;
   background: #fffcf7;
   border: 1px solid #e2cdb2;
-  border-radius: 4px;
-  padding: 60px 64px 64px;
-  box-shadow: 2px 4px 24px #c0904020, 6px 8px 0 #e8d5bc;
+  border-radius: 6px;
+  padding: 56px 60px 60px;
+  box-shadow: 3px 5px 0 #e4cdb0, 6px 10px 0 #d8bfa0;
 }
 
-/* 받는 사람 */
 .letter-to {
   font-size: 13px;
   color: #9c7a5a;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
 }
-
-/* 제목 */
 .letter-title {
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 700;
   color: #6b3a1f;
-  margin-bottom: 32px;
-  line-height: 1.4;
+  margin-bottom: 28px;
+  line-height: 1.45;
 }
-
-/* 구분선 */
 .letter-divider {
   border: none;
   border-top: 1px solid #dcc9b0;
   margin-bottom: 28px;
 }
-
-/* 본문 */
 .letter-body {
   font-size: 15.5px;
-  line-height: 2.4;
+  line-height: 2.45;
   color: #3a2e26;
   word-break: break-word;
 }
-
-/* 본문 단락 간격 */
-.letter-body p {
-  margin-bottom: 0;
-}
-
-/* 보내는 사람 */
 .letter-from {
   margin-top: 48px;
   text-align: right;
-  font-size: 14px;
+  font-size: 13px;
   color: #9c7a5a;
 }
 .letter-from strong {
@@ -82,50 +232,66 @@ body {
   margin-top: 4px;
 }
 
-/* ── 스포일러 스타일 ──
-   기본 상태: 블러 처리 (카톡 스포일러처럼)
-   클릭 시: 공개 / 다시 클릭: 다시 블러 */
+/* 스포일러: 기본 블러 → 탭하면 공개 → 다시 탭하면 블러 */
 .spoiler {
-  filter: blur(6px);
+  filter: blur(5px);
   cursor: pointer;
   border-radius: 3px;
   user-select: none;
   transition: filter 0.35s ease;
   display: inline;
+  -webkit-tap-highlight-color: transparent;
 }
-.spoiler.revealed {
+.spoiler.on {
   filter: none;
   user-select: text;
 }
 
-/* 모바일 대응 */
-@media (max-width: 500px) {
-  .paper { padding: 48px 28px 52px; }
+@media (max-width: 480px) {
+  .paper { padding: 44px 26px 48px; }
+  .envelope { width: 260px; height: 173px; }
 }
 </style>
 </head>
 <body>
+
+<!-- 봉투 화면 — 수정 불필요 -->
+<div id="envelope-scene">
+  <div class="envelope" id="envelope" onclick="openEnvelope()">
+    <div class="env-flap-wrap"></div>
+    <div class="env-body">
+      <div class="env-letter">🎂</div>
+    </div>
+    <div class="env-seal">🥀</div>
+  </div>
+  <p class="hint">탭해서 열어봐 🫳🫳</p>
+</div>
+
+<!-- 편지 화면 -->
+<div id="letter-scene">
 <div class="paper">
 
 <!-- ══════════════════════════════════════════════════════
-     ✏️  아래부터 수정하시면 됩니다
-     ══════════════════════════════════════════════════════ -->
+     ✏️  여기서부터 수정하세요
 
-  <!-- 📌 받는 사람: "..." 안의 텍스트만 바꾸세요 -->
+     📌 줄바꿈  →  <br>
+     📌 단락 띄기  →  <br><br>
+     📌 스포일러  →  [[ 숨길 텍스트 ]]
+        (처음엔 블러, 탭하면 공개, 다시 탭하면 블러)
+
+     예시)
+       오늘 [[깜짝 선물 준비했어.]] 기대해!
+══════════════════════════════════════════════════════ -->
+
+  <!-- 받는 사람 -->
   <p class="letter-to">서윤이에게,</p>
 
-  <!-- 📌 제목: 태그 사이의 텍스트만 바꾸세요 -->
-  <h1 class="letter-title">생일 축하해 🎂</h1>
+  <!-- 제목 -->
+  <h1 class="letter-title">생일 축하해 🫳🫳</h1>
 
   <hr class="letter-divider">
 
-  <!-- 📌 본문
-       - 줄바꿈은 <br> 을 쓰세요
-       - 빈 줄(단락 구분)은 <br><br> 을 쓰세요
-       - 스포일러(블러) 처리: [[ 감추고 싶은 텍스트 ]] 로 감싸세요
-         예) 오늘 [[깜짝 선물이 있어]] 기대해!
-         → 클릭하면 공개, 다시 클릭하면 다시 블러
-  -->
+  <!-- 본문 -->
   <div class="letter-body" id="letter-body">
 [[서윤님의 18번째 생일을 진심으로 축하드립니다.<br>
 저희가 2022년에 처음 만났다는 사실을 알고 계셨습니까?<br>
@@ -173,31 +339,43 @@ body {
 
 <!-- ══════════════════════════════════════════════════════
      ✏️  여기까지 수정하시면 됩니다
-     ══════════════════════════════════════════════════════ -->
+══════════════════════════════════════════════════════ -->
 
-  <!-- 📌 보내는 사람: <strong> 태그 안의 이름만 바꾸세요 -->
+  <!-- 보내는 사람 -->
   <div class="letter-from">
     from. <strong>채희</strong>
   </div>
 
 </div>
+</div>
 
 <script>
-// [[ 텍스트 ]] 를 블러 스포일러로 자동 변환합니다.
-// 클릭 → 공개 / 다시 클릭 → 다시 블러
-// ⚠️ 이 스크립트는 건드리지 않아도 됩니다.
-(function() {
-  const body = document.getElementById('letter-body');
-  // innerHTML에서 [[ ... ]] 패턴을 찾아 span으로 교체
+/* 봉투 열기 — 수정 불필요 */
+var opened = false;
+function openEnvelope() {
+  if (opened) return;
+  opened = true;
+  document.getElementById('envelope').classList.add('open');
+  setTimeout(function () {
+    var scene = document.getElementById('envelope-scene');
+    scene.classList.add('fade-out');
+    setTimeout(function () {
+      scene.style.display = 'none';
+      document.body.classList.add('scrollable');
+      document.getElementById('letter-scene').classList.add('show');
+    }, 700);
+  }, 1200);
+}
+
+/* [[ ]] 스포일러 파싱 — 수정 불필요 */
+(function () {
+  var body = document.getElementById('letter-body');
   body.innerHTML = body.innerHTML.replace(
     /\[\[([\s\S]*?)\]\]/g,
     '<span class="spoiler">$1</span>'
   );
-  // 클릭 이벤트: 토글 (공개 ↔ 블러)
-  body.querySelectorAll('.spoiler').forEach(function(sp) {
-    sp.addEventListener('click', function() {
-      this.classList.toggle('revealed');
-    });
+  body.querySelectorAll('.spoiler').forEach(function (sp) {
+    sp.addEventListener('click', function () { this.classList.toggle('on'); });
   });
 })();
 </script>
