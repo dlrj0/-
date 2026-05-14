@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ✏️ 브라우저 탭에 표시될 이름 -->
+<title>서윤이 생일</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  background: #f5ece0;
+  font-family: 'Nanum Myeongjo', serif;
+  color: #3a2e26;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 16px 80px;
+}
+
+.paper {
+  width: 100%;
+  max-width: 640px;
+  background: #fffcf7;
+  border: 1px solid #e2cdb2;
+  border-radius: 4px;
+  padding: 60px 64px 64px;
+  box-shadow: 2px 4px 24px #c0904020, 6px 8px 0 #e8d5bc;
+}
+
+/* 받는 사람 */
+.letter-to {
+  font-size: 13px;
+  color: #9c7a5a;
+  margin-bottom: 6px;
+}
+
+/* 제목 */
+.letter-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #6b3a1f;
+  margin-bottom: 32px;
+  line-height: 1.4;
+}
+
+/* 구분선 */
+.letter-divider {
+  border: none;
+  border-top: 1px solid #dcc9b0;
+  margin-bottom: 28px;
+}
+
+/* 본문 */
+.letter-body {
+  font-size: 15.5px;
+  line-height: 2.4;
+  color: #3a2e26;
+  word-break: break-word;
+}
+
+/* 본문 단락 간격 */
+.letter-body p {
+  margin-bottom: 0;
+}
+
+/* 보내는 사람 */
+.letter-from {
+  margin-top: 48px;
+  text-align: right;
+  font-size: 14px;
+  color: #9c7a5a;
+}
+.letter-from strong {
+  display: block;
+  font-size: 17px;
+  color: #6b3a1f;
+  margin-top: 4px;
+}
+
+/* ── 스포일러 스타일 ──
+   기본 상태: 블러 처리 (카톡 스포일러처럼)
+   클릭 시: 공개 / 다시 클릭: 다시 블러 */
+.spoiler {
+  filter: blur(6px);
+  cursor: pointer;
+  border-radius: 3px;
+  user-select: none;
+  transition: filter 0.35s ease;
+  display: inline;
+}
+.spoiler.revealed {
+  filter: none;
+  user-select: text;
+}
+
+/* 모바일 대응 */
+@media (max-width: 500px) {
+  .paper { padding: 48px 28px 52px; }
+}
+</style>
+</head>
+<body>
+<div class="paper">
+
+<!-- ══════════════════════════════════════════════════════
+     ✏️  아래부터 수정하시면 됩니다
+     ══════════════════════════════════════════════════════ -->
+
+  <!-- 📌 받는 사람: "..." 안의 텍스트만 바꾸세요 -->
+  <p class="letter-to">서윤이에게,</p>
+
+  <!-- 📌 제목: 태그 사이의 텍스트만 바꾸세요 -->
+  <h1 class="letter-title">생일 축하해 🎂</h1>
+
+  <hr class="letter-divider">
+
+  <!-- 📌 본문
+       - 줄바꿈은 <br> 을 쓰세요
+       - 빈 줄(단락 구분)은 <br><br> 을 쓰세요
+       - 스포일러(블러) 처리: [[ 감추고 싶은 텍스트 ]] 로 감싸세요
+         예) 오늘 [[깜짝 선물이 있어]] 기대해!
+         → 클릭하면 공개, 다시 클릭하면 다시 블러
+  -->
+  <div class="letter-body" id="letter-body">
+[[서윤님의 18번째 생일을 진심으로 축하드립니다.<br>
+저희가 2022년에 처음 만났다는 사실을 알고 계셨습니까?<br>
+<br>
+정서윤님이 14세였을 때 정두부님과 함께 지내셨던 것으로 기억합니다.<br>
+예전과 지금 사이에 큰 변화가 없는 것 같은데, 벌써 18세가 되셨다는 것이 놀랍습니다.<br>
+벌써 주민등록증을 만들러 가시는 것을 보니 시간이 정말 빠르게 흘러가는 것을 실감합니다.<br>
+참고로 내년 수능까지 약 546일 남았다고 합니다.<br>
+<br>
+지금까지 서윤님과 함께 보낸 시간을 돌이켜보면, 제가 매일 게임만 하고 특별히 재미있게 놀아드리지 못했던 것 같습니다.<br>
+그럼에도 불구하고 서윤님께서 항상 다양한 이야기를 해주시고 즐겁게 어울려주셔서 진심으로 감사하게 생각하고 있습니다.<br>
+<br>
+올해부터 집에서도 공부하며 예전보다 더 열심히 노력하고 계신 것을 저도 잘 알고 있습니다.<br>
+원하는 만큼 성적이 바로 나오지 않는다고 해서 너무 실망하거나 포기하지 않으셨으면 좋겠습니다.<br>
+공부를 전혀 하지 않고 낮은 점수를 받는 것과, 열심히 노력했지만 결과가 기대에 미치지 못하는 것 사이에는 매우 큰 차이가 있다고 생각합니다.<br>
+지금처럼 꾸준히 노력하시면 분명 좋은 결과가 있을 것이라고 믿습니다.<br>
+<br>
+올해는 서윤님께서 바라시는 모든 일이 잘 풀리고, 건강하시며 즐거운 일들만 가득하시기를 바랍니다.<br>
+다시 한번 생일을 축하드립니다.<br>]]
+<br>
+<br>
+원본<br>
+<br>
+[[서윤아 18살 생일 축하해<br>]]
+[[우리 22년도에 만난 거 알ටㅏ?<br>]]
+[[서윤이 14살이면 두부랑 같이 살았을 때야 ㄷㄷ <br>]]
+[[예전이랑 지금이랑 달라진 게 많이 없는 것 같은데 왜 벌써 18살이야?<br>]]
+[[벌써 민증도 만들러 가고 시간 진짜 빠르다 ㅋᩚㅋᩚ<br>]]
+[[참고로 내년 수능까지 546일정도 남았대^^<br>]]
+[[<br>]]
+[[지금까지 서윤이랑 같이 놀았던 거 생각해 보면 나는 매일 게임만 하고 딱히<br>]]
+[[재밌게 잘 놀아준 것도 없는 것 같은데,<br>]]
+[[서윤이가 항상 이것저것 많이 얘기해주고 재밌게 놀아줘서 진짜<br>]]
+[[고맙게 생각하고 있어<br>]]
+<br>
+[[올해부터 집에서도 공부하고 예전보다 더 열심히 하는 거 나도 알고 있어<br>]]
+[[원하는 만큼 성적이 바로 안 나온다고 너무 힘 빠지거나 포기 안 했으면 좋겠어<br>]]
+[[공부 하나도 안 하고 점수 낮은 거랑, 열심히 했는데 결과가 안 나오는 건<br>]]
+[[진짜 큰 차이가 있다고 생각하거든<br>]]
+[[지금처럼만 꾸준히 하면 분명 잘 될 거라고 생각해<br>]]
+<br>
+[[올해는 서윤이가 하고 싶은 일 다 잘됐으면 좋겠고, 아프지 말고 재밌는 일만 많았으면 좋겠다<br>]]
+[[다시 한번 생일 축하해<br>]]
+  </div>
+
+<!-- ══════════════════════════════════════════════════════
+     ✏️  여기까지 수정하시면 됩니다
+     ══════════════════════════════════════════════════════ -->
+
+  <!-- 📌 보내는 사람: <strong> 태그 안의 이름만 바꾸세요 -->
+  <div class="letter-from">
+    from. <strong>채희</strong>
+  </div>
+
+</div>
+
+<script>
+// [[ 텍스트 ]] 를 블러 스포일러로 자동 변환합니다.
+// 클릭 → 공개 / 다시 클릭 → 다시 블러
+// ⚠️ 이 스크립트는 건드리지 않아도 됩니다.
+(function() {
+  const body = document.getElementById('letter-body');
+  // innerHTML에서 [[ ... ]] 패턴을 찾아 span으로 교체
+  body.innerHTML = body.innerHTML.replace(
+    /\[\[([\s\S]*?)\]\]/g,
+    '<span class="spoiler">$1</span>'
+  );
+  // 클릭 이벤트: 토글 (공개 ↔ 블러)
+  body.querySelectorAll('.spoiler').forEach(function(sp) {
+    sp.addEventListener('click', function() {
+      this.classList.toggle('revealed');
+    });
+  });
+})();
+</script>
+</body>
+</html>
